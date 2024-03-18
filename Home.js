@@ -22,7 +22,7 @@ import axios from "axios";
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 export default function Home() {
-    const { signIn, user } = useSanctum();
+    const { signIn, user, authenticated } = useSanctum();
 
 
     const [username, setUsername] = useState("maciej.mierzejewski1");
@@ -40,6 +40,7 @@ export default function Home() {
     const insets = useSafeAreaInsets();
 
     const [barStyle, setBarStyle] = React.useState("light");
+    const [fontColor, setFontColor] = React.useState("white");
 
     const offset = useRef(new Animated.Value(0)).current;
 
@@ -51,9 +52,6 @@ export default function Home() {
     });
 
     const login = () => {
-        console.log(user);
-        let url = "https://facility.nimweo.dev/";
-
         signIn(username, password, rememberMe)
             .then(({twoFactor}) => {
                 if (twoFactor) setShowTwoFactor(true);
@@ -73,7 +71,17 @@ export default function Home() {
         } else {
             setBarStyle("dark");
         }
+
+        if ( event.value > 300) {
+            setFontColor("black")
+        } else {
+            setFontColor("white");
+        }
     })
+
+    if (!authenticated) {
+        return <Text>Loading ...</Text>;
+    }
 
     return (
         <SafeAreaView edges={[ "left", "right", "bottom" ]} style={{ flex: 1 }}>
@@ -82,12 +90,18 @@ export default function Home() {
                     position: "absolute",
                     width: "100%",
                     zIndex: 1000,
-                    paddingTop: insets.top
+                    paddingTop: insets.top,
+                    paddingBottom: 10,
+                    paddingHorizontal: 20,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 20
                 }}
                 tint={colorScheme}
                 intensity={translation}
             >
-                <Text style={styles.text}>{text}</Text>
+                <Image source={{ uri: user.profile_photo_url }} height={48} width={48} style={{ borderRadius: 10000}} />
+                <Text style={{ fontSize: 20, color: fontColor}}>{user.first_name} {user.last_name}</Text>
             </AnimatedBlurView>
 
             <Animated.ScrollView
