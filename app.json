@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "nimweo-facility",
+    "name": "Nimweo Facility",
     "slug": "nimweo-facility",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -32,6 +32,17 @@
         "projectId": "abba33b4-a2eb-4dc9-8c73-a19235dd287e"
       }
     },
-    "owner": "esuu01"
+    "owner": "esuu01",
+    "plugins": [
+      "expo-localization",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
   }
 }
