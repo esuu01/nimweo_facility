@@ -66,16 +66,17 @@ export default function Home() {
     }
 
     offset.addListener((event) => {
-        if (colorScheme === "dark" || event.value <= 300) {
+        if (colorScheme === "dark") {
+            setFontColor("white");
             setBarStyle("light");
         } else {
-            setBarStyle("dark");
-        }
-
-        if ( event.value > 300) {
-            setFontColor("black")
-        } else {
-            setFontColor("white");
+            if (event.value > 300) {
+                setBarStyle("dark");
+                setFontColor("black")
+            } else {
+                setBarStyle("light");
+                setFontColor("white");
+            }
         }
     })
 
@@ -101,7 +102,7 @@ export default function Home() {
                 intensity={translation}
             >
                 <Image source={{ uri: user.profile_photo_url }} height={48} width={48} style={{ borderRadius: 10000}} />
-                <Text style={{ fontSize: 20, color: fontColor}}>{user.first_name} {user.last_name}</Text>
+                <Animated.Text style={{ fontSize: 20, color: fontColor}}>{user.first_name} {user.last_name}</Animated.Text>
             </AnimatedBlurView>
 
             <Animated.ScrollView

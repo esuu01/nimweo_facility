@@ -4,8 +4,11 @@ import {BlurView} from "expo-blur";
 import {SafeAreaProvider, SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
 import Home from "./Home";
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { Sanctum } from 'react-sanctum';
 import axios from "axios";
+import {NavigationContainer} from "@react-navigation/native";
 
 const sanctumConfig = {
     apiUrl: "https://facility.nimweo.dev",
@@ -19,6 +22,8 @@ const sanctumConfig = {
 
 axios.defaults.withCredentials = true;
 
+const Tab = createBottomTabNavigator();
+
 export default function App() {
 
     const colorScheme = useColorScheme();
@@ -30,7 +35,11 @@ export default function App() {
     return (
         <SafeAreaProvider style={[themeContainerStyle]}>
             <Sanctum config={sanctumConfig} checkOnInit={true}>
-                <Home />
+                <NavigationContainer>
+                    <Tab.Navigator>
+                        <Tab.Screen name={"Home"} component={Home} />
+                    </Tab.Navigator>
+                </NavigationContainer>
             </Sanctum>
         </SafeAreaProvider>
     );
