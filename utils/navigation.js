@@ -80,7 +80,7 @@ export default function Navigation() {
                         height: 200,
                         width: 200,
                     }}
-                    source={require('../../assets/adaptive-icon.png')}
+                    source={require('../assets/adaptive-icon.png')}
                 />
             </SafeAreaView>
         );
