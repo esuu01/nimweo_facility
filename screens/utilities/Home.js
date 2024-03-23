@@ -24,7 +24,7 @@ function Home()
     const device = useCameraDevice('back')
 
     const photo = useCallback(async () => {
-        if (camera.current) {
+        /*if (camera.current) {
             const file = await camera.current.takePhoto({quality: '1'})
 
             const result = await fetch(`file://${file.path}`)
@@ -32,7 +32,17 @@ function Home()
             await CameraRoll.save(`file://${file.path}`, {
                 type: 'photo',
             })
-        }
+        }*/
+        CameraRoll.getPhotos({
+            first: 20,
+            assetType: 'Photos',
+        })
+            .then(r => {
+                console.log(r.edges);
+            })
+            .catch((err) => {
+                //Error Loading Images
+            });
     }, [camera])
 
 
