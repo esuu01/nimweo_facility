@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "nimweofacility.app"
-               BlueprintName = "nimweofacility"
-               ReferencedContainer = "container:nimweofacility.xcodeproj">
+               BuildableName = "NimweoFacility.app"
+               BlueprintName = "NimweoFacility"
+               ReferencedContainer = "container:NimweoFacility.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "nimweofacilityTests.xctest"
-               BlueprintName = "nimweofacilityTests"
-               ReferencedContainer = "container:nimweofacility.xcodeproj">
+               BuildableName = "NimweoFacilityTests.xctest"
+               BlueprintName = "NimweoFacilityTests"
+               ReferencedContainer = "container:NimweoFacility.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "nimweofacility.app"
-            BlueprintName = "nimweofacility"
-            ReferencedContainer = "container:nimweofacility.xcodeproj">
+            BuildableName = "NimweoFacility.app"
+            BlueprintName = "NimweoFacility"
+            ReferencedContainer = "container:NimweoFacility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "nimweofacility.app"
-            BlueprintName = "nimweofacility"
-            ReferencedContainer = "container:nimweofacility.xcodeproj">
+            BuildableName = "NimweoFacility.app"
+            BlueprintName = "NimweoFacility"
+            ReferencedContainer = "container:NimweoFacility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

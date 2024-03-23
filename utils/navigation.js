@@ -10,7 +10,7 @@ import ChecklistsHomeScreen from "../screens/checklists/Home";
 import {MaterialIcons} from "@expo/vector-icons";
 
 import {useSanctum} from 'react-sanctum';
-import {Animated, Easing, Image, Text, View} from "react-native";
+import {Animated, Button, Easing, Image, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useEffect, useRef} from "react";
 import {BlurView} from "expo-blur";
@@ -20,10 +20,26 @@ import ChecklistNavigation from "./navigation/checklists";
 const Stack = createNativeStackNavigator();
 
 const LoginScreen = () => {
+    const { signIn } = useSanctum();
+
+    const login =  () => {
+        signIn(
+            "maciej.mierzejewski1",
+            "Mierzej12!",
+            true,
+        ).then((res) => {
+            console.log(res);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     return (
         <>
             <View>
                 <Text>Logowanie</Text>
+                <Button title={"Zaloguj"} onPress={() => login()} />
             </View>
         </>
     );
