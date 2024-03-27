@@ -8,6 +8,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {useSanctum} from "react-sanctum";
 import {SafeAreaView} from "react-native-safe-area-context";
 import React from "react";
+import ProfileHomeScreen from "../../screens/profile/Home";
 
 
 const Tab = createBottomTabNavigator();
@@ -61,7 +62,7 @@ export default function AppNavigation()
 
             <Tab.Screen
                 name={"Profile"}
-                component={ChecklistsHomeScreen}
+                component={ProfileHomeScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size, focused }) => (<Image source={{ uri: user.profile_photo_url }} width={size} height={size} style={{ borderRadius: 99999, borderColor: color, borderWidth: focused ? 1.5 : 0}}/> )

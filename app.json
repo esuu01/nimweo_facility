@@ -56,7 +56,8 @@
           "enableMicrophonePermission": true,
           "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "runtimeVersion": "1.0.0",
     "updates": {

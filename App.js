@@ -9,6 +9,8 @@ import Navigation from "./utils/navigation";
 import {useCallback, useEffect, useState} from "react";
 import {Text, useColorScheme} from "react-native";
 import {TamaguiProvider} from "tamagui";
+import * as Font from 'expo-font';
+
 import tamaguiConfig from "./tamagui.config";
 
 const sanctumConfig = {
@@ -26,17 +28,30 @@ axios.defaults.withCredentials = true;
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
+
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
 
     const colorScheme = useColorScheme();
 
+    const theme = {
+        fontFamily: "RedditMono-Regular",
+    };
+
     useEffect(() => {
         async function prepare() {
             try {
-                // Pre-load fonts, make any API calls you need to do here
-                // Artificially delay for two seconds to simulate a slow loading
-                // experience. Please remove this if you copy and paste the code!
+                // Load fonts
+                await Font.loadAsync({
+                    'RedditMono-Black': require('./assets/fonts/RedditMono/RedditMono-Black.ttf'),
+                    'RedditMono-Bold': require('./assets/fonts/RedditMono/RedditMono-Bold.ttf'),
+                    'RedditMono-ExtraBold': require('./assets/fonts/RedditMono/RedditMono-ExtraBold.ttf'),
+                    'RedditMono-Light': require('./assets/fonts/RedditMono/RedditMono-Light.ttf'),
+                    'RedditMono-ExtraLight': require('./assets/fonts/RedditMono/RedditMono-ExtraLight.ttf'),
+                    'RedditMono-Regular': require('./assets/fonts/RedditMono/RedditMono-Regular.ttf'),
+                    'RedditMono-Medium': require('./assets/fonts/RedditMono/RedditMono-Medium.ttf'),
+                    'RedditMono-SemiBold': require('./assets/fonts/RedditMono/RedditMono-SemiBold.ttf'),
+                });
             } catch (e) {
                 console.warn(e);
             } finally {
@@ -50,11 +65,6 @@ export default function App() {
 
     const onLayoutRootView = useCallback(async () => {
         if (appIsReady) {
-            // This tells the splash screen to hide immediately! If we call this after
-            // `setAppIsReady`, then we may see a blank screen while the app is
-            // loading its initial state and rendering its first pixels. So instead,
-            // we hide the splash screen once we know the root view has already
-            // performed layout.
             await SplashScreen.hideAsync();
         }
     }, [appIsReady]);
@@ -70,7 +80,7 @@ export default function App() {
 
     return (
         <SafeAreaProvider>
-            <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme}>
+            <TamaguiProvider config={tamaguiConfig} defaultTheme={'dark'}>
                 <Sanctum config={sanctumConfig} checkOnInit={true}>
                     <Navigation />
                 </Sanctum>

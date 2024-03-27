@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, ScrollView, View, Text, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, NavigationProp, ParamListBase } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 
 type IconName = keyof typeof Ionicons["glyphMap"];
@@ -86,7 +86,7 @@ export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#101010"}}>
-            <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: buttons ? 'space-between' : 'center' }}>
+            <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: buttons || image ? 'space-between' : 'center' }}>
                 <View style={{ width: 48, height: 48, display: image ? 'none' : 'flex' }}>
                     {renderLeftButton()}
                 </View>
@@ -99,7 +99,7 @@ export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
                         { subtitle && (
                             <Text style={{ color: "#888888", fontSize: 14}}>{ subtitle }</Text>
                         )}
-                        <Text style={{ color: "white", fontSize: 18}}>{ title }</Text>
+                        <Text style={{ color: "white", fontSize: 18, fontWeight: "500"}}>{ title }</Text>
                     </View>
                 </View>
 
