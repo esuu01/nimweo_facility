@@ -7,7 +7,9 @@ import axios from "axios";
 
 import Navigation from "./utils/navigation";
 import {useCallback, useEffect, useState} from "react";
-import {Text} from "react-native";
+import {Text, useColorScheme} from "react-native";
+import {TamaguiProvider} from "tamagui";
+import tamaguiConfig from "./tamagui.config";
 
 const sanctumConfig = {
     apiUrl: "https://facility.nimweo.dev",
@@ -26,6 +28,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
+
+    const colorScheme = useColorScheme();
 
     useEffect(() => {
         async function prepare() {
@@ -66,9 +70,11 @@ export default function App() {
 
     return (
         <SafeAreaProvider>
-            <Sanctum config={sanctumConfig} checkOnInit={true}>
-                <Navigation />
-            </Sanctum>
+            <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme}>
+                <Sanctum config={sanctumConfig} checkOnInit={true}>
+                    <Navigation />
+                </Sanctum>
+            </TamaguiProvider>
         </SafeAreaProvider>
     );
 }

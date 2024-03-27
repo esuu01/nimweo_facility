@@ -35,13 +35,15 @@ interface AppLayoutProps {
 export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
     const navigation = useNavigation();
 
+    const { title, subtitle, image, buttons } = headerOptions;
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#101010"}}>
-            <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: (headerOptions.buttons && headerOptions.image) ? 'space-between' : 'center' }}>
-                { (headerOptions.buttons && headerOptions.buttons.left) ? (
-                    <View style={{ width: 48, height: 48 }}>
+            <View style={{ paddingVertical: 10, paddingHorizontal: 20, flexDirection: 'row', justifyContent: (buttons) ? 'space-between' : 'center' }}>
+                <View style={{ width: 48, height: 48, display: image ? 'none' : 'flex' }}>
+                    { (buttons && buttons.left) ? (
                         <Pressable
-                            onPress={() => headerOptions.buttons.left.navigate ? navigation.navigate(headerOptions.buttons.left.navigate) : headerOptions.buttons.left.onPress()}
+                            onPress={buttons.left.navigate ? () => navigation.navigate(buttons.left.navigate) : buttons.left.onPress()}
                             style={({pressed}) => [{
                                 backgroundColor: pressed ? "#2F2F2F" : "#222222",
                                 borderRadius: 9999999,
@@ -49,30 +51,31 @@ export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
                                 width: 48,
                                 justifyContent: 'center',
                                 alignItems: 'center'
-                            }]}
-                        >
-                            <Ionicons name={headerOptions.buttons.left.icon} size={24} style={{ color: 'white' }} />
+                            }]}>
+                            <Ionicons name={buttons.left.icon}
+                                      size={24}
+                                      style={{color: 'white'}}/>
                         </Pressable>
-                    </View>
-                ) : null}
+                    ) : null}
+                </View>
 
                 <View style={{ flexDirection: 'row', gap: 15 }}>
-                    { headerOptions.image && (
-                        <Image source={{ uri: headerOptions.image }} height={48} width={48} style={{ borderRadius: 10000}} />
+                    { image && (
+                        <Image source={{ uri: image }} height={48} width={48} style={{ borderRadius: 10000}} />
                     )}
 
-                    <View style={{ flexDirection: 'column', justifyContent: headerOptions.subtitle ? 'space-between' : 'center' }}>
-                        { headerOptions.subtitle && (
-                            <Text style={{ color: "#888888", fontSize: 14}}>{ headerOptions.subtitle }</Text>
+                    <View style={{ flexDirection: 'column', justifyContent: subtitle ? 'space-between' : 'center' }}>
+                        { subtitle && (
+                            <Text style={{ color: "#888888", fontSize: 14}}>{ subtitle }</Text>
                         )}
-                        <Text style={{ color: "white", fontSize: 18}}>{ headerOptions.title }</Text>
+                        <Text style={{ color: "white", fontSize: 18}}>{ title }</Text>
                     </View>
                 </View>
 
-                { (headerOptions.buttons && headerOptions.buttons.right) && (
-                    <View style={{ width: 48, height: 48 }}>
+                <View style={{ width: 48, height: 48 }}>
+                    { ( buttons && buttons.right ) && (
                         <Pressable
-                            onPress={() => headerOptions.buttons.right.navigate ? navigation.navigate(headerOptions.buttons.right.navigate) : headerOptions.buttons.right.onPress()}
+                            onPress={buttons.right.navigate ? () => navigation.navigate(buttons.right.navigate) : buttons.right.onPress()}
                             style={({pressed}) => [{
                                 backgroundColor: pressed ? "#2F2F2F" : "#222222",
                                 borderRadius: 9999999,
@@ -82,10 +85,10 @@ export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
                                 alignItems: 'center'
                             }]}
                         >
-                            <Ionicons name={headerOptions.buttons.right.icon} size={24} style={{ color: 'white' }} />
+                            <Ionicons name={buttons.right.icon} size={24} style={{ color: 'white' }} />
                         </Pressable>
-                    </View>
-                )}
+                    )}
+                </View>
             </View>
 
             <ScrollView style={{ paddingVertical: 20}}>

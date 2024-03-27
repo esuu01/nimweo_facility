@@ -1,11 +1,13 @@
 import Home from "../../screens/Home";
-import {MaterialIcons} from "@expo/vector-icons";
+import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import UtilitiesHomeScreen from "../../screens/utilities/Home";
 import ProductsHomeScreen from "../../screens/products/Home";
 import ChecklistsHomeScreen from "../../screens/checklists/Home";
-import {Image} from "react-native";
+import {Image, Pressable, Text, View} from "react-native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {useSanctum} from "react-sanctum";
+import {SafeAreaView} from "react-native-safe-area-context";
+import React from "react";
 
 
 const Tab = createBottomTabNavigator();
@@ -21,6 +23,7 @@ export default function AppNavigation()
                 tabBarActiveTintColor: "white",
                 tabBarInactiveTintColor: "#6F6F6F",
             }}
+
             initialRouteName={"Home"}
         >
             <Tab.Screen
