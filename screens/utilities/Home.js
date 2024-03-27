@@ -1,10 +1,14 @@
-import {View, Text, Button} from "react-native";
+import {View, Text, Button, Image} from "react-native";
 import {Headers, ImageTitleSubtitleButtonHeader, TitleHeader} from "../../components/Headers";
-import {AppLayout} from "../../layouts/_app";
+import {AppLayout, TestLayout} from "../../layouts/_app";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {Camera, useCameraDevice} from "react-native-vision-camera";
-import {useCallback, useRef} from "react";
-import {CameraRoll} from "@react-native-camera-roll/camera-roll";
+import {useCallback, useRef, useState} from "react";
+import {CameraRoll, iosRequestReadWriteGalleryPermission, iosReadGalleryPermission} from "@react-native-camera-roll/camera-roll";
+import {useSanctum} from "react-sanctum";
+import {useIsFocused} from "@react-navigation/native";
+import {useAppState} from '@react-native-community/hooks'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -23,8 +27,31 @@ function Home()
     const camera = useRef(null)
     const device = useCameraDevice('back')
 
+    const [image, setImage] = useState(null);
+
+    const isFocused = useIsFocused()
+    const appState = useAppState()
+    const isActive = isFocused && appState === "active"
+
+    const testowa = () => {
+        iosReadGalleryPermission('addOnly').then((res) => {
+            console.log(res)
+            if (res === "not-determined") {
+                iosRequestReadWriteGalleryPermission().then((res) => {
+                    console.log(res)
+                }).catch((err) => {
+                    console.log(err)
+                })
+            } else {
+                alert("Permission granted");
+            }
+        }).catch((err) => {
+            console.log(err)
+        });
+    };
+
     const photo = useCallback(async () => {
-        /*if (camera.current) {
+        if (camera.current) {
             const file = await camera.current.takePhoto({quality: '1'})
 
             const result = await fetch(`file://${file.path}`)
@@ -32,33 +59,29 @@ function Home()
             await CameraRoll.save(`file://${file.path}`, {
                 type: 'photo',
             })
-        }*/
-        CameraRoll.getPhotos({
-            first: 20,
-            assetType: 'Photos',
-        })
-            .then(r => {
-                console.log(r.edges);
-            })
-            .catch((err) => {
-                //Error Loading Images
-            });
+
+            console.log(result);
+
+            setImage(result);
+        }
+
     }, [camera])
 
+    if (image) {
+        console.log(image.url)
+    }
 
     return (
         <AppLayout
-            header={
-                <TitleHeader
-                    title={"Utilities"}
-                />
-            }
+            headerOptions={{
+                title: "Utilities",
+            }}
         >
             <Camera
                 ref={camera}
                 style={{flex: 1, width: "100%", height: 500}}
                 device={device}
-                isActive={true}
+                isActive={isActive}
                 photo={true}
                 focusable={true}
                 orientation='portrait'
@@ -69,6 +92,8 @@ function Home()
             />
 
             <Button title={"Take photo"} onPress={photo} />
+
+            {image && <Image source={{uri: image.url}} style={{width: 200, height: 200}} />}
 
             <Text style={{ color: "white", fontSize: 18}}>UTILITIES</Text>
         </AppLayout>

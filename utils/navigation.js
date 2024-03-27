@@ -83,8 +83,8 @@ export default function Navigation() {
     }, []);
 
     const interpolated = scaleValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 1.50],
+        inputRange: [-10, 0, 1, 10],
+        outputRange: [0, 1, 1.50, 2000],
     });
 
     if (authenticated === null) {

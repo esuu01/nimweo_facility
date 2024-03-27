@@ -8,11 +8,9 @@ export default function ProductsHomeScreen()
 {
     return (
         <AppLayout
-            header={
-                <TitleHeader
-                    title={"Products"}
-                />
-            }
+            headerOptions={{
+                title: "Products",
+            }}
         >
             <Text style={{ color: "white", fontSize: 18}}>Products</Text>
         </AppLayout>
