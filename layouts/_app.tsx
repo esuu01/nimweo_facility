@@ -1,8 +1,8 @@
 import React from "react";
-import { SafeAreaView, ScrollView, View, Text, Image, Pressable } from "react-native";
+import { SafeAreaView, ScrollView, View, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
+import { H3, H6} from "tamagui";
 
 type IconName = keyof typeof Ionicons["glyphMap"];
 
@@ -97,9 +97,9 @@ export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
                     )}
                     <View style={{ flexDirection: 'column', justifyContent: subtitle ? 'space-between' : 'center' }}>
                         { subtitle && (
-                            <Text style={{ color: "#888888", fontSize: 14}}>{ subtitle }</Text>
+                            <H6 style={{ color: "#888888", fontSize: 14}}>{ subtitle }</H6>
                         )}
-                        <Text style={{ color: "white", fontSize: 18, fontWeight: "500"}}>{ title }</Text>
+                        <H3 style={{ fontSize: 18, fontWeight: "500"}}>{ title }</H3>
                     </View>
                 </View>
 
@@ -107,7 +107,8 @@ export const AppLayout = ({ children, headerOptions }: AppLayoutProps) => {
                     {renderRightButton()}
                 </View>
             </View>
-            <ScrollView style={{ paddingVertical: 20}}>
+
+            <ScrollView style={{ padding: 20}}>
                 { children }
             </ScrollView>
         </SafeAreaView>

@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import {
+    ActivityIndicator,
     Animated,
-    Button,
+    Button, Dimensions,
     Image,
-    ImageBackground,
+    ImageBackground, Linking, Pressable,
     ScrollView,
     StyleSheet,
     Text,
@@ -26,7 +27,7 @@ import {
     H3,
     H4,
     H5, H6,
-    ListItem,
+    ListItem, ListItemText,
     XStack,
     YGroup,
     YStack
@@ -46,9 +47,9 @@ export default function Home()
                 options={{headerShown: false, presentation: "modal",}}
             />
             <Stack.Screen
-                name="Product scanner"
-                component={Notifications}
-                options={{headerShown: false, presentation: "modal",}}
+                name="Newsfeed"
+                component={NewsFeed}
+                options={{headerShown: false,}}
             />
         </Stack.Navigator>
     )
@@ -56,6 +57,7 @@ export default function Home()
 
 function HomeScreen() {
     const { user } = useSanctum();
+    const navigation = useNavigation();
 
     return (
         <AppLayout
@@ -70,7 +72,7 @@ function HomeScreen() {
                     },
             }}}
         >
-            <View style={{ paddingHorizontal: 20}}>
+            <YStack gap={20}>
                 <YGroup alignSelf="center" bordered size="$4">
                     <YGroup.Item>
                         <ListItem pressTheme hoverTheme icon={<Ionicons name={"star"} /> } title="Star" subTitle="Twinkles" />
@@ -91,18 +93,26 @@ function HomeScreen() {
                         </ListItem>
                     </YGroup.Item>
                 </YGroup>
-            </View>
 
-            <YStack gap={20} style={{
-                paddingHorizontal: 20
-            }}>
-                <XStack justifyContent="space-between">
-                    <H4>Last News</H4>
-                    <H4>View all</H4>
-                </XStack>
 
-                <YStack>
+                <YStack gap={20}>
+                    <XStack justifyContent="space-between">
+                        <H5>Last News</H5>
 
+                        <Pressable
+                            style={({ pressed }) => ({
+                                borderBottomWidth: pressed ? 1 : 0,
+                                borderBottomColor: "white",
+                            })}
+                            onPress={() => navigation.navigate("Newsfeed")}
+                        >
+                            <H5>View all</H5>
+                        </Pressable>
+                    </XStack>
+
+                    <YStack>
+
+                    </YStack>
                 </YStack>
             </YStack>
         </AppLayout>
@@ -127,5 +137,84 @@ function Notifications() {
                 );
             })}
         </ModalLayout>
+    );
+}
+function NewsFeed() {
+    const { user } = useSanctum();
+
+    const [news, setNews] = React.useState([]);
+    const [refreshing, setRefreshing] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        axios.get("https://newsapi.org/v2/everything?q=tesla&from=2024-02-27&sortBy=publishedAt&apiKey=dca7da4f981d4c75977617e6995a58f1")
+            .then((response) => {
+                setNews(response.data.articles);
+
+                setLoading(false);
+            });
+
+    }, []);
+
+    const refresh = () => {
+        axios.get("https://newsapi.org/v2/everything?q=tesla&from=2024-03-20&sortBy=publishedAt&apiKey=dca7da4f981d4c75977617e6995a58f1")
+            .then((response) => {
+                setNews(response.data.articles);
+            });
+
+        alert("Newsfeed refreshed!")
+    }
+
+    return (
+        <AppLayout
+            headerOptions={{
+                title: "Newsfeed",
+                buttons: {
+                    left: {
+                        icon: "arrow-back-outline",
+                        navigate: "HomeScreen",
+                    },
+                    right: {
+                        icon: "refresh-outline",
+                        onPress: () => refresh(),
+                    },
+                }
+            }}
+        >
+            {loading && (
+                <View style={{ justifyContent: "center", alignItems: "center", padding: 100 }}>
+                    <ActivityIndicator size="large" />
+                </View>
+            )}
+
+            <YStack gap={20}>
+                {news.map((article) => {
+                    return (
+                        <YGroup key={article.url} size="$4" bordered onPress={() => Linking.openURL(article.url)}>
+                            <YGroup.Item>
+                                <XStack gap={20} padding={10} paddingVertical={20}>
+                                    <Image source={{ uri: article.urlToImage }} style={{ width: 64, height: 64, borderRadius: 10 }} />
+
+                                    <YStack>
+                                        <H4>{article.author}</H4>
+                                        <H6>{article.publishedAt}</H6>
+                                    </YStack>
+                                </XStack>
+                            </YGroup.Item>
+
+                            <YGroup.Item>
+                                <Image source={{ uri: article.urlToImage }} style={{ width: "100%", height: 200 }} />
+                            </YGroup.Item>
+                            <YGroup.Item>
+                                <View style={{ padding: 10, gap: 30 }}>
+                                    <H3>{article.title}</H3>
+                                    <H6>{article.description}</H6>
+                                </View>
+                            </YGroup.Item>
+                        </YGroup>
+                    );
+                })}
+            </YStack>
+        </AppLayout>
     );
 }
