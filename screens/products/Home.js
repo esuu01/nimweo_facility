@@ -32,7 +32,7 @@ export function HomeScreen()
                 buttons: {
                     right: {
                         icon: "barcode-outline",
-                        navigate: "Product scanner"
+                        navigate: "Product scanner",
                     }
                 }
             }}
