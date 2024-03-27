@@ -1,4 +1,4 @@
-import {Link, NavigationContainer} from "@react-navigation/native";
+import {Link, NavigationContainer, useNavigation} from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -40,16 +40,6 @@ const LoginScreen = () => {
             <View>
                 <Text>Logowanie</Text>
                 <Button title={"Zaloguj"} onPress={() => login()} />
-            </View>
-        </>
-    );
-}
-
-const Notifications = () => {
-    return (
-        <>
-            <View>
-                <Text>Notifications</Text>
             </View>
         </>
     );
